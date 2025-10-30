@@ -1,22 +1,35 @@
+"use client";
+import { useState } from "react";
+
 export default function Reports() {
+  const [current, setCurrent] = useState(0);
+  const images = ["/1.jpg", "/2.jpg"]; // public 폴더에 1.jpg, 2.jpg 넣기
+
+  const changeSlide = (direction) => {
+    setCurrent((prev) => (prev + direction + images.length) % images.length);
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-6">
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8 max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-          학생 주간 리포트
-        </h1>
-        <div className="space-y-2">
-          <p className="text-gray-700 dark:text-gray-300">
-            <span className="font-semibold">테스트 점수:</span> 95점
-          </p>
-          <p className="text-gray-700 dark:text-gray-300">
-            <span className="font-semibold">과제 제출:</span> 완료
-          </p>
-          <p className="text-gray-700 dark:text-gray-300">
-            <span className="font-semibold">비고:</span> 이번 주 집중도 좋음
-          </p>
-        </div>
-      </div>
+    <div className="relative w-screen h-screen bg-black overflow-hidden flex items-center justify-center">
+      <img
+        src={images[current]}
+        alt={`slide-${current}`}
+        className="w-full h-full object-contain transition-opacity duration-300"
+      />
+
+      <button
+        onClick={() => changeSlide(-1)}
+        className="absolute left-5 text-white text-4xl font-bold hover:opacity-70 select-none"
+      >
+        &#10094;
+      </button>
+
+      <button
+        onClick={() => changeSlide(1)}
+        className="absolute right-5 text-white text-4xl font-bold hover:opacity-70 select-none"
+      >
+        &#10095;
+      </button>
     </div>
   );
 }
